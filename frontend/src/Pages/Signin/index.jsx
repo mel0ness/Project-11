@@ -1,9 +1,13 @@
 import "../../Style/Pages/Signin/signin.scss"
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const SignIn = () => {
     return (
         <main className="main bg-dark">
+          <Helmet>
+          <title>Argent Bank - Sign in</title>
+          </Helmet>
         <section className="sign-in-content">
           <i className="fa fa-user-circle sign-in-icon"></i>
           <h1>Sign In</h1>

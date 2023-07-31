@@ -1,11 +1,14 @@
 import "../../Style/Pages/Home/home.scss"
-import IconChat from "../../Assets/icon-chat.png"
-import IconMoney from "../../Assets/icon-money.png"
-import IconSecurity from "../../Assets/icon-security.png"
+import homeDatas from "../../Assets/homeDatas.json"
+import HomeFeatures from "../../Components/HomeFeatures"
+import { Helmet } from "react-helmet"
 
 const Home = () => {
     return (
         <main>
+          <Helmet>
+          <title>Argent Bank - Home Page</title>
+          </Helmet>
     <div className="hero">
       <section className="hero-content">
         <h2 className="sr-only">Promoted Content</h2>
@@ -17,29 +20,9 @@ const Home = () => {
     </div>
     <section className="features">
       <h2 className="sr-only">Features</h2>
-      <div className="feature-item">
-        <img src={IconChat} alt="Chat Icon" className="feature-icon" />
-        <h3 className="feature-item-title">You are our #1 priority</h3>
-        <p>
-          Need to talk to a representative? You can get in touch through our
-          24/7 chat or through a phone call in less than 5 minutes.
-        </p>
-      </div>
-      <div className="feature-item">
-        <img src={IconMoney} alt="Chat Icon" className="feature-icon" />
-        <h3 className="feature-item-title">More savings means higher rates</h3>
-        <p>
-          The more you save with us, the higher your interest rate will be!
-        </p>
-      </div>
-      <div className="feature-item">
-        <img src={IconSecurity} alt="Chat Icon" className="feature-icon" />
-        <h3 className="feature-item-title">Security you can trust</h3>
-        <p>
-          We use top of the line encryption to make sure your data and money
-          is always safe.
-        </p>
-      </div>
+{homeDatas.map(({id, src, title, p}) => 
+<HomeFeatures src={src} title={title} p={p} key={id} />)
+}
     </section>
   </main>
     )

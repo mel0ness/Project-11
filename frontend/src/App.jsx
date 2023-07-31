@@ -1,3 +1,4 @@
+import "../src/Style/Utils/entry.scss"
 import Header from './Components/Header/Header';
 import Footer from './Components/Footer';
 import Home from './Pages/Home';
@@ -6,9 +7,14 @@ import Error from './Pages/Error';
 import User from './Pages/User';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ReactHelmet from './Components/Helmet/Helmet';
+import { HelmetProvider } from "react-helmet-async";
+import { Provider } from "react-redux";
+import store from "./Utils/store"
 
 const App = () => {
     return (
+      <Provider store={store}>
+      <HelmetProvider>
         <Router>
       <ReactHelmet/>
       <Header/>
@@ -20,6 +26,7 @@ const App = () => {
       </Routes>
       <Footer/>
     </Router>
+    </HelmetProvider></Provider>
     )
 }
 
