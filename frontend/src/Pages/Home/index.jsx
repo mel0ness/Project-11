@@ -1,14 +1,14 @@
 import "../../Style/Pages/Home/home.scss"
 import homeDatas from "../../Assets/homeDatas.json"
 import HomeFeatures from "../../Components/HomeFeatures"
-import { Helmet } from "react-helmet"
+import { HelmetProvider } from "react-helmet-async"
 
 const Home = () => {
     return (
         <main>
-          <Helmet>
+          <HelmetProvider>
           <title>Argent Bank - Home Page</title>
-          </Helmet>
+          </HelmetProvider>
     <div className="hero">
       <section className="hero-content">
         <h2 className="sr-only">Promoted Content</h2>
