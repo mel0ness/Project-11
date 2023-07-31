@@ -10,10 +10,15 @@ import ReactHelmet from './Components/Helmet/Helmet';
 import { HelmetProvider } from "react-helmet-async";
 import { Provider } from "react-redux";
 import store from "./Utils/store"
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
 
 const App = () => {
+
+let persistore = persistStore(store);
     return (
       <Provider store={store}>
+<PersistGate persistor={persistore}>
       <HelmetProvider>
         <Router>
       <ReactHelmet/>
@@ -26,7 +31,7 @@ const App = () => {
       </Routes>
       <Footer/>
     </Router>
-    </HelmetProvider></Provider>
+    </HelmetProvider></PersistGate></Provider>
     )
 }
 

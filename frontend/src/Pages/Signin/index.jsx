@@ -20,7 +20,7 @@ const SignIn = () => {
     if (status === 200) {
 navigate("../user");
     }
-    else if (status === 500) {
+    else if (status === 500 || status === "rejected") {
       navigate("../error")
     }
     else if (status === 400) {
@@ -58,11 +58,12 @@ navigate("../user");
    dispatch(connexionActions.connected())
 
       const statusConnexionRedirect = statusConnexion(getState())
-        // console.log(statusConnexionRedirect);
+        // console.log(statusActualized);
       redirect(statusConnexionRedirect)
       
     } catch (error) {
-      dispatch(connexionActions.rejected(error))
+      await dispatch(connexionActions.rejected(error))
+      redirect("rejected")
     }}
   
   }
