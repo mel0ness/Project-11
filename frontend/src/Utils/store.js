@@ -1,7 +1,9 @@
 import connexionReducer from "../Features/connexion"
+import userReducer from "../Features/user"
 import { configureStore, combineReducers } from "@reduxjs/toolkit"
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+
 
 
 
@@ -15,11 +17,18 @@ const persistConfig = {
   const authPersistConfig = {
     key: 'auth',
     storage: storage,
-    blacklist: ['status', 'message']
+    blacklist: ['status', 'message', 'fetching']
+  }
+
+  const userPersistConfig = {
+    key: 'user',
+    storage: storage,
+    blacklist: ['message']
   }
 
   const reducers = combineReducers({
-    connexion: persistReducer(authPersistConfig, connexionReducer)
+    connexion: persistReducer(authPersistConfig, connexionReducer),
+    user: persistReducer(userPersistConfig , userReducer)
   })
  
 

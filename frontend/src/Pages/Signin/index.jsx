@@ -1,5 +1,5 @@
 import "../../Style/Pages/Signin/signin.scss"
-import { Link } from "react-router-dom";
+import { Erase } from "../../Features/connexion";
 import { HelmetProvider } from "react-helmet-async"
 import { useState } from "react";
 import * as connexionActions from "../../Features/connexion"
@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 const SignIn = () => {
   const [username, updateUsername] = useState("")
   const [password, updatePassword] = useState("")
+  const [fields, fieldserror] = useState(false)
+  const [animation, createAnimation] = useState(false)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const messageError = useSelector(message);
@@ -25,6 +27,7 @@ navigate("../user");
     }
     else if (status === 400) {
     navigate("/sign-in")
+    createAnimation(false)
   }}
 
   function signIn(username, password) {
@@ -68,9 +71,18 @@ navigate("../user");
   
   }
 
-  const sending = () => {
+  const sending = (e) => {
+    e.preventDefault();
+   
+    if(!password || !username)
+    {fieldserror(true)
+      dispatch(Erase())
+    }
 
-    dispatch(signIn(username, password))
+    else {
+      fieldserror(false)
+      createAnimation(true)
+    dispatch(signIn(username, password))}
     
    
   }
@@ -84,34 +96,35 @@ navigate("../user");
         <section className="sign-in-content">
           <i className="fa fa-user-circle sign-in-icon"></i>
           <h1>Sign In</h1>
-          <form>{ messageError === 'Error: User not found!' ? (
+          <form onSubmit={e => sending(e)}>{ messageError === 'Error: User not found!' ? (
             <div className="input-wrapper">
               
               <label htmlFor="username">Username</label
-              ><input type="text" id="username" value={username} onInput={e => updateUsername(e.target.value)} />
+              ><input minLength={5} type="text" id="username" value={username} onInput={e => updateUsername(e.target.value)} />
               <div className="NotFound">User not found!</div>
             </div>) :
              (<div className="input-wrapper">
               
               <label htmlFor="username">Username</label
-              ><input type="text" id="username" value={username} onInput={e => updateUsername(e.target.value)} />
+              ><input  minLength={5} type="text" id="username" value={username} onInput={e => updateUsername(e.target.value)} />
             </div>) }
             {messageError === 'Error: Password is invalid' ? (
             <div className="input-wrapper">
               <label htmlFor="password">Password</label
-              ><input type="password" id="password" value={password} onInput={e => updatePassword(e.target.value)} />
+              ><input  minLength={5} type="password" id="password" value={password} onInput={e => updatePassword(e.target.value)} />
               <div className="NotFound">Password is invalid!</div>
             </div>) : (<div className="input-wrapper">
               <label htmlFor="password">Password</label
-              ><input type="password" id="password" value={password} onInput={e => updatePassword(e.target.value)} />
+              ><input  minLength={5} type="password" id="password" value={password} onInput={e => updatePassword(e.target.value)} />
             </div>)}
             <div className="input-remember">
               <input type="checkbox" id="remember-me" /><label htmlFor="remember-me"
                 >Remember me</label
               >
             </div>
-    
-          <Link className="sign-in-button" onClick={sending}>Sign In</Link>
+    {animation? (  <button type="submit" className="sign-in-button"><div className="animationFetch"></div></button>) : ( <button type="submit" className="sign-in-button">Sign In</button>)}
+    {fields? ( <div className="NotFound">Fields must be filled!</div>) : (<div></div>)}
+         
          
           </form>
         </section>
