@@ -1,5 +1,3 @@
-
-
 .main {
     flex: 1;
   }
@@ -48,6 +46,7 @@
     width: 300px;
     margin: 0 auto;
     margin-top: 3rem;
+    margin-bottom: 3rem;
     padding: 2rem;
   }
   
@@ -87,15 +86,8 @@
     color: red;
   }
 
-  .createAccount {
-    color: #005935;
-    display: block;
-    margin : auto;
-    margin-top: 2rem;
-  }
-
-  .success {
-    color: #00bc77;
+  .failure {
+    color: red;
     display: block;
     margin: auto;
     margin-top: 2rem;

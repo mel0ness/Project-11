@@ -1,5 +1,7 @@
 import connexionReducer from "../Features/connexion"
 import userReducer from "../Features/user"
+import newUserReducer from "../Features/newUser"
+import editingReducer from "../Features/editUserName"
 import { configureStore, combineReducers } from "@reduxjs/toolkit"
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
@@ -11,7 +13,7 @@ const persistConfig = {
     timeout: 1000,
     key: 'root',
     storage,
-    blacklist: ['connexion']
+    blacklist: ['connexion', "user", "newUser", "editing"]
   }
 
   const authPersistConfig = {
@@ -26,9 +28,17 @@ const persistConfig = {
     blacklist: ['message']
   }
 
+  const newUserPersistConfig = {
+    key: 'newUser',
+    storage: storage,
+    blacklist: ['message', 'fetching']
+  }
+
   const reducers = combineReducers({
     connexion: persistReducer(authPersistConfig, connexionReducer),
-    user: persistReducer(userPersistConfig , userReducer)
+    user: persistReducer(userPersistConfig , userReducer),
+    newUser: persistReducer(newUserPersistConfig, newUserReducer),
+    editing: editingReducer
   })
  
 

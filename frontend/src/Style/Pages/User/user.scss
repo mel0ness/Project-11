@@ -35,5 +35,124 @@
     color: #fff;
     margin-bottom: 2rem;
   }
+
+  .modal {
+    display: block;
+    width: 300px;
+    height: 110px;
+    margin: auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    transition: width 800ms ease-in-out, height 300ms ease-in-out;
+    
+  }
+
   
+  .input-wrapper-editing {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-bottom: 1rem;
+
+    & label {
+      text-align: center;
+      color:#00bc77
+    }
+
+    & input {
+      text-align: center;
+      padding: 5px;
+      font-size: 1.2rem;
+    }
+  }
+
+  .sign-in-button-editing {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    border: unset;
+    text-decoration: unset;
+    border-color: #00bc77;
+    background-color: #00bc77;
+    color: #fff;
+    border-radius: 20px;
+    box-shadow: 2px 2px 0 0 #12002b;
+  }
+
+  .sign-in-button-editing:active {
+    box-shadow: unset;
+    position: relative;
+    top: 2px;
+    left: 2px;
+  }
+  
+.animationFetch {
+  width: 16px;
+  height: 16px;
+  margin: auto;
+  border-radius: 100%;
+  border: solid 3px transparent;
+  border-top-color: white;
+  border-left-color: white;
+  animation: loading linear 800ms infinite both;
+}
+
+.error {
+  color: red;
+}
+
+@keyframes loading {
+  from {
+    transform: rotate(0)
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
  
+.openned {
+opacity: 1;
+
+& form {
+  opacity: 1;
+  width: auto;
+  height: auto;
+transition: 0s all 800ms
+}
+
+&.edit-button {
+  opacity: 1;
+  width: auto;
+  height: 40px;
+  transition: 0s opacity 800ms, 0s width 800ms, 0s height;
+}
+}
+
+.closed {
+  position: relative;
+ transform: translateY(-500px);
+  opacity: 0;
+  width: 0;
+  height: 0;
+  padding: 0;  
+  transition: opacity 300ms 800ms, width 300ms ease-in-out, height 800ms ease-in-out, transform 0s 800ms;
+
+  & form {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    transition: all 0s;
+  }
+
+  &.edit-button {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    transition: all 0s;
+  }
+ 
+}

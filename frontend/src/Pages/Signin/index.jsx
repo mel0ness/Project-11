@@ -6,6 +6,9 @@ import * as connexionActions from "../../Features/connexion"
 import { connexion, message, statusConnexion } from "../../Utils/Selectors";
 import { useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { newUserStatus } from "../../Utils/Selectors";
+import { EraseNewUser } from "../../Features/newUser";
 
 const SignIn = () => {
   const [username, updateUsername] = useState("")
@@ -15,7 +18,13 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const messageError = useSelector(message);
+  const newProfileCreated = useSelector(newUserStatus)
+
   // const statusConnexionRedirect = useSelector(statusConnexion)
+
+const erasing = () => {
+  dispatch(EraseNewUser())
+}
 
   const redirect = (status) => {
 
@@ -96,26 +105,27 @@ navigate("../user");
         <section className="sign-in-content">
           <i className="fa fa-user-circle sign-in-icon"></i>
           <h1>Sign In</h1>
+          {newProfileCreated === 200 ? (<div className="success">Your profile has been successfully created! You can sign in</div>) : <div></div>}
           <form onSubmit={e => sending(e)}>{ messageError === 'Error: User not found!' ? (
             <div className="input-wrapper">
               
               <label htmlFor="username">Username</label
-              ><input minLength={5} type="text" id="username" value={username} onInput={e => updateUsername(e.target.value)} />
+              ><input type="text" id="username" value={username} onInput={e => updateUsername(e.target.value)} />
               <div className="NotFound">User not found!</div>
             </div>) :
              (<div className="input-wrapper">
               
               <label htmlFor="username">Username</label
-              ><input  minLength={5} type="text" id="username" value={username} onInput={e => updateUsername(e.target.value)} />
+              ><input  type="text" id="username" value={username} onInput={e => updateUsername(e.target.value)} />
             </div>) }
             {messageError === 'Error: Password is invalid' ? (
             <div className="input-wrapper">
               <label htmlFor="password">Password</label
-              ><input  minLength={5} type="password" id="password" value={password} onInput={e => updatePassword(e.target.value)} />
+              ><input  type="password" id="password" value={password} onInput={e => updatePassword(e.target.value)} />
               <div className="NotFound">Password is invalid!</div>
             </div>) : (<div className="input-wrapper">
               <label htmlFor="password">Password</label
-              ><input  minLength={5} type="password" id="password" value={password} onInput={e => updatePassword(e.target.value)} />
+              ><input  type="password" id="password" value={password} onInput={e => updatePassword(e.target.value)} />
             </div>)}
             <div className="input-remember">
               <input type="checkbox" id="remember-me" /><label htmlFor="remember-me"
@@ -125,7 +135,7 @@ navigate("../user");
     {animation? (  <button type="submit" className="sign-in-button"><div className="animationFetch"></div></button>) : ( <button type="submit" className="sign-in-button">Sign In</button>)}
     {fields? ( <div className="NotFound">Fields must be filled!</div>) : (<div></div>)}
          
-         
+         <Link to="../sign-up" className="createAccount" onClick={() => erasing()}>You don't have an account yet? Create one</Link>
           </form>
         </section>
       </main>

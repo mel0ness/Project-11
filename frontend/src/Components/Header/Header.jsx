@@ -5,6 +5,7 @@ import { Erase } from "../../Features/connexion";
 import { useDispatch, useSelector } from "react-redux";
 import { lastName, firstName, connected } from "../../Utils/Selectors";
 import {EraseUserState} from "../../Features/user";
+import { EraseNewUser } from "../../Features/newUser";
 
 
 
@@ -18,6 +19,7 @@ const Header = () => {
   const eraseStates = () => {
     dispatch(Erase())
     dispatch(EraseUserState())
+    dispatch(EraseNewUser())
   }
 
     return(
@@ -34,12 +36,12 @@ const Header = () => {
           <i className="fa fa-user-circle"></i>
           {firstNameUser} {lastNameUser}
         </Link>
-        <Link className="main-nav-item" to="/" onClick={eraseStates}>
+        <Link className="main-nav-item" to="/" onClick={() => eraseStates()}>
           <i className="fa fa-user-circle"></i>
            Sign Out
         </Link></div>) : (
       <div>
-        <Link className="main-nav-item" to="/sign-in" onClick={eraseStates}>
+        <Link className="main-nav-item" to="/sign-in" onClick={() => eraseStates()}>
           <i className="fa fa-user-circle"></i>
            Sign In 
         </Link>

@@ -7,3 +7,9 @@ export const connected = (state) => state.connexion.connected
 export const lastName = (state) => state.user.lastname
 export const firstName = (state) => state.user.firstname
 export const userName = (state) => state.user.username 
+
+export const newUserFetch = (state) => state.newUser.fetching
+export const newUserStatus = (state) => state.newUser.status
+
+export const editingStatus = (state) => state.editing.status
+export const editingfetching = (state) => state.editing.fetching
