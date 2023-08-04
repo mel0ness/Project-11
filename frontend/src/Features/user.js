@@ -50,6 +50,12 @@ reducers: {
             return
         }
     },
+    ActualizeUserName : {
+reducer: (draft, action) => {
+    draft.username = action.payload
+    return
+}
+    },
     EraseUserState : {
         reducer: (draft) => {
 return initialState
@@ -81,6 +87,6 @@ catch (error) {
 }
 }
 
-export const {EraseUserState} = actions;
+export const {EraseUserState, ActualizeUserName} = actions;
 
 export default reducer;

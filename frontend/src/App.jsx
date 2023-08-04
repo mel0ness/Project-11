@@ -13,6 +13,9 @@ import { Provider } from "react-redux";
 import store from "./Utils/store"
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
+import PrivateRouteConected from "./Style/Components/PrivateRouteConnected";
+import PrivateRouteNotConected from "./Style/Components/PrivateRouteNotConnected";
+
 
 const App = () => {
 
@@ -26,9 +29,9 @@ let persistore = persistStore(store);
       <Header/>
       <Routes>
         <Route exact path="/" element={<Home/>}/>
-        <Route path="/sign-in" element={<SignIn/>}/>
-        <Route path="/sign-up" element={<Signup/>}/>
-        <Route path="/user" element ={<User/>} />
+        <Route path="/sign-in" element={<PrivateRouteConected><SignIn/></PrivateRouteConected>}/>
+        <Route path="/sign-up" element={<PrivateRouteConected><Signup/></PrivateRouteConected>}/>
+        <Route path="/user" element ={<PrivateRouteNotConected><User/></PrivateRouteNotConected>}/>
         <Route path="*" element={<Error/>} />
       </Routes>
       <Footer/>

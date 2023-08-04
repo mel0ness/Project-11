@@ -3,12 +3,13 @@ import { Erase } from "../../Features/connexion";
 import { HelmetProvider } from "react-helmet-async"
 import { useState } from "react";
 import * as connexionActions from "../../Features/connexion"
-import { connexion, message, statusConnexion } from "../../Utils/Selectors";
+import {  connexion, message, statusConnexion } from "../../Utils/Selectors";
 import { useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { newUserStatus } from "../../Utils/Selectors";
 import { EraseNewUser } from "../../Features/newUser";
+
 
 const SignIn = () => {
   const [username, updateUsername] = useState("")
@@ -18,9 +19,11 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const messageError = useSelector(message);
-  const newProfileCreated = useSelector(newUserStatus)
+  const newProfileCreated = useSelector(newUserStatus);
+
 
   // const statusConnexionRedirect = useSelector(statusConnexion)
+
 
 const erasing = () => {
   dispatch(EraseNewUser())
@@ -96,6 +99,8 @@ navigate("../user");
    
   }
 
+ 
+
     return (
         <main className="main bg-dark">
           
@@ -139,7 +144,8 @@ navigate("../user");
           </form>
         </section>
       </main>
-  )
-}
+  )}
+
+
 
 export default SignIn;

@@ -1,4 +1,4 @@
-import "../../Style/Pages/Error/error.scss"
+import "../../Style/Components/HomeFeatures/homefeatures.scss"
 import error from "../../Assets/error.png"
 import { HelmetProvider } from "react-helmet-async"
 import { useSelector } from "react-redux"
@@ -16,11 +16,11 @@ const Error = () => {
       {statusProblem ? (
        
          
-       <div> <img src={error} alt="Chat Icon" className="feature-icon-error" />
+       <div> <img src={error} alt="Chat Icon" className="feature-icon" />
         <h1 className="feature-item-title"> Sorry, internal server error!</h1></div>
       ) :
       ( <div>
-    <img src={error} alt="Chat Icon" className="feature-icon-error" />
+    <img src={error} alt="Chat Icon" className="feature-icon" />
     <h1 className="feature-item-title"> This page doesn't exist!</h1></div>
   )
     }</div>

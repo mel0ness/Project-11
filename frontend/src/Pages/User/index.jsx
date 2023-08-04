@@ -2,10 +2,10 @@ import "../../Style/Pages/User/user.scss"
 import accountDatas from "../../Assets/accountsDatas.json"
 import Account from "../../Components/AccountFeatures";
 import { Helmet } from "react-helmet";
-import { fetchUsersInfs } from "../../Features/user";
+import { fetchUsersInfs, ActualizeUserName } from "../../Features/user";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { connected, userName, editingStatus, editingfetching, token} from "../../Utils/Selectors";
+import { userName, editingStatus, editingfetching, token} from "../../Utils/Selectors";
 import * as editingActions from "../../Features/editUserName"
 import { useNavigate } from "react-router";
 
@@ -13,7 +13,6 @@ const User = () => {
 const navigate = useNavigate();
 const dispatch = useDispatch();
 const userNameUser = useSelector(userName)
-const connexionAvailable = useSelector(connected)
 const [editing, launchEditing] = useState("closed");
 const [editingButton, launchEditingButton] = useState("openned");
 const [NewuserName, createNewUserName] = useState("");
@@ -23,9 +22,9 @@ const [emptyfields, checkfields] = useState(false);
 
 
 useEffect(()=> {
-  if(connexionAvailable)
+
    dispatch(fetchUsersInfs)
- }, [dispatch, connexionAvailable])
+ }, [dispatch])
 
  const changeDisplay = () => {
   if(editing === "closed" && editingButton === "openned") {
@@ -53,11 +52,11 @@ else {
 
 }
 
-const redirect = (status) => {
+const redirect = (status, username) => {
 
   if (status === 200) {
     fieldserror(false)
-    dispatch(fetchUsersInfs)
+   dispatch(ActualizeUserName(username))
     changeDisplay()
     launchAnimation(false)
 
@@ -100,8 +99,7 @@ function editUserName(username) {
         let data = await response.json();
     await dispatch(editingActions.resolved(data))
 const validateOrNot = editingStatus(getState())
-      // console.log(statusActualized);
-   redirect(validateOrNot)
+   redirect(validateOrNot, NewuserName)
     
   } catch (error) {
     await dispatch(editingActions.rejected(error))
@@ -111,7 +109,7 @@ const validateOrNot = editingStatus(getState())
 }
 
 
-if(connexionAvailable) return ( <main className="main bg-dark">
+return ( <main className="main bg-dark">
 <Helmet>
 <title>Argent Bank - Accounts</title>
 </Helmet><div className="header">
@@ -119,22 +117,13 @@ if(connexionAvailable) return ( <main className="main bg-dark">
          <div className={"modal " + editing}><form onSubmit={e => Put(e)} >{fields ? (<div className="error">Error with field information</div>) : (<div></div>)}{emptyfields ? (<div className="error">You have to fill the field!</div>) : (<div></div>)}<div className="input-wrapper-editing">
               
               <label htmlFor="username">New user name</label
-              ><input type="text" id="username" value={NewuserName} onInput={e => createNewUserName(e.target.value)} />
+              ><input autoComplete="off" type="text" id="username" value={NewuserName} onInput={e => createNewUserName(e.target.value)} />
             </div> {animation? (  <button type="submit" className="sign-in-button-editing"><div className="animationFetch"></div></button>) : ( <button type="submit" className="sign-in-button-editing">Validate new user name</button>)} </form></div> <button className={"edit-button " + editingButton} onClick={() => changeDisplay()}>Edit Name</button>
         </div>
         <h2 className="sr-only">Accounts</h2>
         {accountDatas.map(({id, title, amount, description}) => 
         <Account title={title} amount={amount} description={description} key={id}/>
         ) }</main>)
-        else
-    return (
-      <main className="main bg-dark">
-      <Helmet>
-      <title>Argent Bank - Accounts</title>
-      </Helmet><div className="header">
-                <h1>You must be connected to access this page!</h1>
-          
-              </div></main>) }
   
-
+}
 export default User;
