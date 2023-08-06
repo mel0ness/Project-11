@@ -1,5 +1,5 @@
 import "../../Style/Components/HomeFeatures/homefeatures.scss"
-import error from "../../Assets/error.png"
+import error from "../../Assets/error.webp"
 import { HelmetProvider } from "react-helmet-async"
 import { useSelector } from "react-redux"
 import { statusConnexion, connexion } from "../../Utils/Selectors"

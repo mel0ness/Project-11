@@ -12,6 +12,7 @@ return (
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <meta name="description" content="Argent Bank - To keep and manage your money safely" />
     </Helmet>
     </HelmetProvider>
 )

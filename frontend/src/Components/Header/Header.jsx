@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Logo from "../../Assets/argentBankLogo.png"
+import Logo from "../../Assets/argentBankLogo.webp"
 import "../../Style/Components/Header/header.scss"
 import { Erase } from "../../Features/connexion";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,6 +29,8 @@ const Header = () => {
           className="main-nav-logo-image"
           src={Logo}
           alt="Argent Bank Logo"
+          width="200px"
+          height="55px"
         />
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
