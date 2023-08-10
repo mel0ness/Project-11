@@ -1,9 +1,10 @@
 import "../../Style/Pages/Signin/signin.scss"
 import { Erase } from "../../Features/connexion";
 import { HelmetProvider } from "react-helmet-async"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as connexionActions from "../../Features/connexion"
-import {  connexion, message, statusConnexion } from "../../Utils/Selectors";
+import * as rememberActions from "../../Features/rememberMe"
+import {  connexion, message, statusConnexion, mail, stock } from "../../Utils/Selectors";
 import { useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -14,19 +15,45 @@ import { EraseNewUser } from "../../Features/newUser";
 const SignIn = () => {
   const [username, updateUsername] = useState("")
   const [password, updatePassword] = useState("")
-  const [fields, fieldserror] = useState(false)
+  const [fields, fieldserror] = useState(false) 
   const [animation, createAnimation] = useState(false)
+  const [remember, rememberChange] = useState(false)
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const mailStocked = useSelector(mail)
+  const isStocked = useSelector(stock)
   const messageError = useSelector(message);
   const newProfileCreated = useSelector(newUserStatus);
 
+ 
+  const rememberUser = () => {
+    if(isStocked) {
+      updateUsername(mailStocked)
+      rememberChange(true)
+    }
+  }
 
-  // const statusConnexionRedirect = useSelector(statusConnexion)
+  useEffect(
+      rememberUser
+    , [mailStocked, isStocked]
+  )
 
+ 
+
+const rememberMe = () => {
+if (remember) {
+  rememberChange(false)
+  dispatch(rememberActions.dontStock())
+}
+else {
+  rememberChange(true)
+  dispatch(rememberActions.stockUserName(username))
+}
+}
 
 const erasing = () => {
   dispatch(EraseNewUser())
+  dispatch(connexionActions.Erase())
 }
 
   const redirect = (status) => {
@@ -57,6 +84,7 @@ navigate("../user");
     if (status === 'pending') {
       return
     }
+    dispatch(rememberActions.stockUserName(username))
     dispatch(connexionActions.fetch())
 
     try {
@@ -132,11 +160,15 @@ navigate("../user");
               <label htmlFor="password">Password</label
               ><input  type="password" id="password" value={password} onInput={e => updatePassword(e.target.value)} />
             </div>)}
-            <div className="input-remember">
-              <input type="checkbox" id="remember-me" /><label htmlFor="remember-me"
+            {remember? (<div className="input-remember">
+              <input type="checkbox" id="remember-me" onChange={() => rememberMe()} checked/><label htmlFor="remember-me"
                 >Remember me</label
               >
-            </div>
+            </div>) : (<div className="input-remember">
+              <input type="checkbox" id="remember-me" onChange={() => rememberMe()}/><label htmlFor="remember-me"
+                >Remember me</label
+              >
+            </div>)}
     {animation? (  <button type="submit" className="sign-in-button"><div className="animationFetch"></div></button>) : ( <button type="submit" className="sign-in-button">Sign In</button>)}
     {fields? ( <div className="NotFound">Fields must be filled!</div>) : (<div></div>)}
          

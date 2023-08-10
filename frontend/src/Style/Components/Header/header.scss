@@ -10,6 +10,17 @@
   .main-nav a {
     font-weight: bold;
     color: #2c3e50;
+    @media (max-width: 440px) {
+     font-weight: unset; 
+     font-size: 0.9rem;
+    }
+  }
+
+  .flexyHeader {
+    @media (max-width: 440px) {
+      display: flex;
+      flex-direction: column;
+    }
   }
   
   .main-nav a.router-link-exact-active {
@@ -19,6 +30,11 @@
   .main-nav-item {
     text-decoration: none;
     margin-right: 0.5rem;
+    @media (max-width: 440px) {
+      margin-right: 0;
+      text-align: left;
+    }
+ 
   }
   
   .main-nav-item:hover {

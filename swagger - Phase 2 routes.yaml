@@ -111,7 +111,7 @@ paths:
       description: API for fetching all accounts of user (Global, not one by one)
       responses:
         '200':
-          description: User accounts get successfuly
+          description: User accounts get successfuly / => UserAccounts
           schema:
             $ref: '#/definitions/UserAccounts'
         '400':
@@ -125,35 +125,85 @@ paths:
       tags:
         - Account Module
       summary: User Specific Account API
-      description: API for fetching one specific account in another page
+      description: API for fetching one specific account in another page / =>AccountIDCall
       parameters:
         - in: body
           name: body
-          description: Get a specific account
+          description: Get a specific account 
           schema:
             $ref: '#/definitions/AccountIDCall'
       produces:
         - application/json
       responses:
         '200':
-          description: User account get successfuly
+          description: User account get successfuly / =>AccountInformations
           schema:
             $ref: '#/definitions/AccountInformations'
         '400':
           description: Invalid Fields
         '500':
           description: Internal Server Error
-    put:
+    get:
       security:
         - Bearer: []
       tags:
         - Account Module
-      summary: Change transaction informations
-      description: API to change transaction informations
+      summary: Get account transactions for a specific mounth
+      description: API for fetching one specific mounth for an account / => AccountPeriodFilter
       parameters:
         - in: body
           name: body
-          description: Update user transaction informations
+          description: Get a specific period of the account 
+          schema:
+            $ref: '#/definitions/AccountPeriodFilter'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User account filter get successfuly / => TransactionFiltered
+          schema:
+            $ref: '#/definitions/TransactionFiltered'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/transactions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: User Specific Transaction API
+      description: API for fetching one specific transaction / => TransactionIDCall
+      parameters:
+        - in: body
+          name: body
+          description: Get a specific account
+          schema:
+            $ref: '#/definitions/TransactionIDCall'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User transaction get successfuly / => TransactionInformations
+          schema:
+            $ref: '#/definitions/TransactionInformations'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: Change transaction informations
+      description: API to change transaction informations / => TransactionsChanges
+      parameters:
+        - in: body
+          name: body
+          description: Update user transaction informations 
           required: true
           schema:
             $ref: '#/definitions/TransactionChanges'
@@ -161,13 +211,39 @@ paths:
         - application/json
       responses:
         '200':
-          description: Transaction informations successfuly updated
+          description: Transaction informations successfuly updated / => TransactionModified
           schema:
             $ref: '#/definitions/TransactionModified'
         '400':
           description: Invalid Fields
         '500':
           description: Internal Server Error
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: Delete transaction informations
+      description: API to delete transaction informations / => TransactionDelete
+      parameters:
+        - in: body
+          name: body
+          description: Delete user transaction informations
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionDelete'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction informations successfuly deleted / => TransactionDeleted
+          schema:
+            $ref: '#/definitions/TransactionDeleted'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -237,7 +313,7 @@ definitions:
           type: object
           properties:
             accountID: 
-             type: string
+             type: integer
              description : ID of each account
             accountName:
              type: string
@@ -253,7 +329,7 @@ definitions:
   AccountIDCall :
    properties:
     AccountID : 
-     type: string
+     type: integer
   AccountInformations :
    type: object
    properties:
@@ -265,14 +341,40 @@ definitions:
         type: object
         properties:
                TransactionID:
-                type: string
+                type: integer
                 description : ID of each trasaction
                Amount:
                 type: string
                 description: Value of each transaction
                TransationInformations:
                 type: string
-                description : Desscription of the transaction
+                description : Description of the transaction
+               TransactionDate:
+                type: string
+                description: Date of the transaction 
+  AccountPeriodFilter:
+   properties:
+    Mounth:
+     type: string
+  TransactionFiltered:
+   type: object
+   properties:
+    status: 
+     type: integer
+    message: 
+     type: string
+    body:
+     type: object
+     properties:
+      TransactionID: 
+       type: integer
+      Amount: 
+       type: string
+      TransactionInformations:
+       type: string     
+      TransactionDate :
+       type: string 
+
   TransactionChanges: 
    properties: 
     transactionInformation : 
@@ -289,4 +391,37 @@ definitions:
         properties:
           newTransactionInfs :
                type: string
-               description: New Transaction informations           
+               description: New Transaction informations      
+  TransactionIDCall :
+   properties :
+    transactionID :
+     type: integer
+  TransactionInformations :
+   type: object
+   properties: 
+    status: 
+     type: integer
+    message: 
+     type: string
+    body: 
+     type: object
+     properties:
+      transactionInformations :
+       type: string
+      amount: 
+       type: string
+      period: 
+       type: string
+  TransactionDelete:
+   properties: 
+    transactionID:
+     type: integer
+  TransactionDeleted:
+   type: object
+   properties:
+    status: 
+     type: integer
+    message: 
+     type: string
+
+      

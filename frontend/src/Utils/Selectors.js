@@ -13,3 +13,6 @@ export const newUserStatus = (state) => state.newUser.status
 
 export const editingStatus = (state) => state.editing.status
 export const editingfetching = (state) => state.editing.fetching
+
+export const mail = (state) => state.remember.mail
+export const stock = (state) => state.remember.remember

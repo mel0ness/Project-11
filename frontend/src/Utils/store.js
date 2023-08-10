@@ -2,6 +2,7 @@ import connexionReducer from "../Features/connexion"
 import userReducer from "../Features/user"
 import newUserReducer from "../Features/newUser"
 import editingReducer from "../Features/editUserName"
+import rememberReducer from "../Features/rememberMe"
 import { configureStore, combineReducers } from "@reduxjs/toolkit"
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
@@ -38,7 +39,8 @@ const persistConfig = {
     connexion: persistReducer(authPersistConfig, connexionReducer),
     user: persistReducer(userPersistConfig , userReducer),
     newUser: persistReducer(newUserPersistConfig, newUserReducer),
-    editing: editingReducer
+    editing: editingReducer,
+    remember: rememberReducer
   })
  
 

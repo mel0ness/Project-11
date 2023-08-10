@@ -3,7 +3,7 @@ import Logo from "../../Assets/argentBankLogo.webp"
 import "../../Style/Components/Header/header.scss"
 import { Erase } from "../../Features/connexion";
 import { useDispatch, useSelector } from "react-redux";
-import { lastName, firstName, connected } from "../../Utils/Selectors";
+import { connected, userName } from "../../Utils/Selectors";
 import {EraseUserState} from "../../Features/user";
 import { EraseNewUser } from "../../Features/newUser";
 
@@ -11,8 +11,7 @@ import { EraseNewUser } from "../../Features/newUser";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const lastNameUser = useSelector(lastName);
-  const firstNameUser = useSelector(firstName);
+  const userNameUser = useSelector(userName)
   const connectedUser = useSelector(connected)
 
 
@@ -34,9 +33,9 @@ const Header = () => {
         />
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
-      {connectedUser? (<div> <Link className="main-nav-item" to="./user">
+      {connectedUser? (<div className="flexyHeader"> <Link className="main-nav-item" to="./user">
           <i className="fa fa-user-circle"></i>
-          {firstNameUser} {lastNameUser}
+          {userNameUser}
         </Link>
         <Link className="main-nav-item" to="/" onClick={() => eraseStates()}>
           <i className="fa fa-user-circle"></i>
