@@ -118,8 +118,8 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/account:        
-    post:
+  /user/accounts/{AccountID}:        
+    get:
       security:
         - Bearer: []
       tags:
@@ -127,9 +127,14 @@ paths:
       summary: User Specific Account API
       description: API for fetching one specific account in another page / =>AccountIDCall
       parameters:
+        - in: path
+          name: AccountID
+          description: ID of the wanted account in path
+          required: true
+          type: string
         - in: body
           name: body
-          description: Get a specific account 
+          description: Account details 
           schema:
             $ref: '#/definitions/AccountIDCall'
       produces:
@@ -143,14 +148,25 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+  /user/accounts/{AccountID}/{month}:         
     get:
       security:
         - Bearer: []
       tags:
         - Account Module
-      summary: Get account transactions for a specific mounth
-      description: API for fetching one specific mounth for an account / => AccountPeriodFilter
+      summary: Get account transactions for a specific month
+      description: API for fetching one specific month for an account / => AccountPeriodFilter
       parameters:
+        - in : path
+          name: AccountID
+          description: ID of the account aimed
+          required: true
+          type: string
+        - in : path
+          name: month
+          description: month datas wanted
+          required: true
+          type: string
         - in: body
           name: body
           description: Get a specific period of the account 
@@ -167,7 +183,7 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/transactions:
+  /user/transactions/{TransactionID}:
     get:
       security:
         - Bearer: []
@@ -176,9 +192,14 @@ paths:
       summary: User Specific Transaction API
       description: API for fetching one specific transaction / => TransactionIDCall
       parameters:
+        - in: path
+          name: TransactionID
+          description: ID of the transaction wanted
+          required: true
+          type: string
         - in: body
           name: body
-          description: Get a specific account
+          description: Get a specific Transaction
           schema:
             $ref: '#/definitions/TransactionIDCall'
       produces:
@@ -192,7 +213,7 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-
+  /user/transactions/{TransactionID}/informations:
     put:
       security:
         - Bearer: []
@@ -201,6 +222,11 @@ paths:
       summary: Change transaction informations
       description: API to change transaction informations / => TransactionsChanges
       parameters:
+        - in: path
+          name: TransactionID
+          description: ID of the transaction to change
+          required: true
+          type: string
         - in: body
           name: body
           description: Update user transaction informations 
@@ -226,6 +252,11 @@ paths:
       summary: Delete transaction informations
       description: API to delete transaction informations / => TransactionDelete
       parameters:
+        - in: path
+          name: TransactionID
+          description: ID of the transaction where we want to delete informations
+          required: true
+          type: string
         - in: body
           name: body
           description: Delete user transaction informations
@@ -313,7 +344,7 @@ definitions:
           type: object
           properties:
             accountID: 
-             type: integer
+             type: string
              description : ID of each account
             accountName:
              type: string
@@ -329,7 +360,7 @@ definitions:
   AccountIDCall :
    properties:
     AccountID : 
-     type: integer
+     type: string
   AccountInformations :
    type: object
    properties:
@@ -341,7 +372,7 @@ definitions:
         type: object
         properties:
                TransactionID:
-                type: integer
+                type: string
                 description : ID of each trasaction
                Amount:
                 type: string
@@ -354,6 +385,8 @@ definitions:
                 description: Date of the transaction 
   AccountPeriodFilter:
    properties:
+    AccountID:
+     type: string
     Mounth:
      type: string
   TransactionFiltered:
@@ -367,7 +400,7 @@ definitions:
      type: object
      properties:
       TransactionID: 
-       type: integer
+       type: string
       Amount: 
        type: string
       TransactionInformations:
@@ -395,7 +428,7 @@ definitions:
   TransactionIDCall :
    properties :
     transactionID :
-     type: integer
+     type: string
   TransactionInformations :
    type: object
    properties: 
@@ -410,12 +443,12 @@ definitions:
        type: string
       amount: 
        type: string
-      period: 
+      TransactionDate: 
        type: string
   TransactionDelete:
    properties: 
     transactionID:
-     type: integer
+     type: string
   TransactionDeleted:
    type: object
    properties:
@@ -423,5 +456,4 @@ definitions:
      type: integer
     message: 
      type: string
-
       
