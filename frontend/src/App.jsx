@@ -13,8 +13,8 @@ import { Provider } from "react-redux";
 import store from "./Utils/store"
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
-import PrivateRouteConected from "./Style/Components/PrivateRouteConnected";
-import PrivateRouteNotConected from "./Style/Components/PrivateRouteNotConnected";
+import PrivateRouteConected from "./Components/PrivateRouteConnected";
+import PrivateRouteNotConected from "./Components/PrivateRouteNotConnected";
 
 
 const App = () => {

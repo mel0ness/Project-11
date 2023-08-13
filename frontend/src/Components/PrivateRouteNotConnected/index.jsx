@@ -1,11 +1,11 @@
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { userName } from '../../../Utils/Selectors';
+import { connected } from '../../Utils/Selectors';
 
-function PrivateRouteConected({ children }) {
-    const connectedValidation = useSelector(userName);
+function PrivateRouteNotConected({ children }) {
+    const connectedValidation = useSelector(connected);
     
-    if (connectedValidation) {
+    if (!connectedValidation) {
         // not logged in so redirect to login page with the return url
         return <Navigate to="/"/>
     }
@@ -14,4 +14,4 @@ function PrivateRouteConected({ children }) {
     return children;
 }
 
-export default PrivateRouteConected;
+export default PrivateRouteNotConected;
