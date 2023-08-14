@@ -29,16 +29,12 @@ const persistConfig = {
     blacklist: ['message']
   }
 
-  const newUserPersistConfig = {
-    key: 'newUser',
-    storage: storage,
-    blacklist: ['message', 'fetching']
-  }
+
 
   const reducers = combineReducers({
     connexion: persistReducer(authPersistConfig, connexionReducer),
     user: persistReducer(userPersistConfig , userReducer),
-    newUser: persistReducer(newUserPersistConfig, newUserReducer),
+    newUser: newUserReducer,
     editing: editingReducer,
     remember: rememberReducer
   })
