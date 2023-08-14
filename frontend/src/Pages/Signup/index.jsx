@@ -5,6 +5,7 @@ import * as newUserActions from "../../Features/newUser"
 import { useNavigate } from "react-router"
 import { newUserFetch, newUserStatus } from "../../Utils/Selectors"
 import { useDispatch, useSelector } from "react-redux"
+import { dontStock } from "../../Features/rememberMe"
 
 
 const Signup = () => {
@@ -31,6 +32,7 @@ const sending = (e) => {
         fieldserror(false)
 createAnimation(true)
 dispatch(signUp(email, password, firstname, lastname, username))
+dispatch(dontStock())
 
     }
 }

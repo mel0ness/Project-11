@@ -25,7 +25,6 @@ const SignIn = () => {
   const messageError = useSelector(message);
   const newProfileCreated = useSelector(newUserStatus);
 
- 
   const rememberUser = () => {
     if(isStocked) {
       updateUsername(mailStocked)
@@ -84,7 +83,6 @@ navigate("../user");
     if (status === 'pending') {
       return
     }
-    dispatch(rememberActions.stockUserName(username))
     dispatch(connexionActions.fetch())
 
     try {

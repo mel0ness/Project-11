@@ -1,13 +1,14 @@
 import "../../Style/Pages/User/user.scss"
 import accountDatas from "../../Assets/accountsDatas.json"
 import Account from "../../Components/AccountFeatures";
-import { Helmet } from "react-helmet";
+import { HelmetProvider } from "react-helmet-async"
 import { fetchUsersInfs, ActualizeUserName } from "../../Features/user";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { editingStatus, editingfetching, token, lastName, firstName, userName} from "../../Utils/Selectors";
 import * as editingActions from "../../Features/editUserName"
 import { useNavigate } from "react-router"; 
+
 
 const User = () => {
 const navigate = useNavigate();
@@ -27,7 +28,7 @@ const [emptyfields, checkfields] = useState(false);
 useEffect(()=> {
 
    dispatch(fetchUsersInfs)
-   createNewUserName(userNameUser)
+   createNewUserName(userNameUser) 
  }, [dispatch, userNameUser])
 
  const changeDisplay = () => {
@@ -53,6 +54,7 @@ if(!NewuserName && !cancel) {
 else if (cancel) {
   changeDisplay();
   launchAnimation(false)
+  cancelAction(false)
 }
 else {
   launchAnimation(true)
@@ -124,9 +126,9 @@ const validateOrNot = editingStatus(getState())
 
 
 return ( <main className="main bg-dark">
-<Helmet>
+<HelmetProvider>
 <title>Argent Bank - Accounts</title>
-</Helmet><div className="header">
+</HelmetProvider><div className="header">
           <h1>Welcome back<br />{firstNameUser} {lastNameUser}</h1>
          <div className={"modal " + editing}><form onSubmit={e => Put(e)} >{fields ? (<div className="error">Error with field information</div>) : (<div></div>)}{emptyfields ? (<div className="error">You have to fill the field!</div>) : (<div></div>)}<div className="input-wrapper-editing">
               

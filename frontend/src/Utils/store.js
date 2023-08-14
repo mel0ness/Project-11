@@ -18,7 +18,7 @@ const persistConfig = {
   }
 
   const authPersistConfig = {
-    key: 'auth',
+    key: 'connexion',
     storage: storage,
     blacklist: ['status', 'message', 'fetching']
   }
